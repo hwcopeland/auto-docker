@@ -1,6 +1,8 @@
 #!/bin/sh
 set -e
 
+## I fixed this already on my local but for now we using VINA bc im poor and cant afford gpus ;(
+
 # docking: (pdbid:str, batch_label:str) -> ()
 
 [ $# != 2 ] && echo "usage: $0 pdbid batch_label" && exit 1
