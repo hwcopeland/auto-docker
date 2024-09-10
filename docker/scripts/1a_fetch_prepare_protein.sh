@@ -2,7 +2,7 @@
 
 ## Notes and TODO:
 #  First off the ligand detection is absolutly fucked.... how fix? parse with biopython or detect by chain_id
-#  What the fuck is the gpf file?
+#  What the fuck is the gpf file? read the docs -> https://github.com/ccsb-scripps/AutoDock-Vina/blob/develop/docs/source/docking_basic.rst
 #  I think the prep for protien should be done on download and the target pocket identification should be done later in the workflow
 #  	- ie somethin like this https://app.eraser.io/workspace/BGuRgEioWmzZCgtljtfp?origin=share
 #	- og workflow does it first, doing it the other way will allow us to do virtual screens and blind docks
