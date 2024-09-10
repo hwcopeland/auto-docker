@@ -54,6 +54,8 @@ receptor $PDBID.pdbqt
 gridcenter 49.8363 17.6087 36.2723
 smooth 0.5
 EOF
+## TERRIBLE HORRIBLE NO GOOD VERY BAD HARDCODING!!! ^^^
+
 
 # one map file per atom type in the ligands
 for r in $LIGAND_TYPES; do
