@@ -1,3 +1,5 @@
+## We dont use this file as the cluster has Dynamic Volume provisioning with Longhorn.
+
 apiVersion: v1
 kind: PersistentVolume
 metadata:
