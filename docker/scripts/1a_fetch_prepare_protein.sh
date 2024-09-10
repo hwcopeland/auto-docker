@@ -1,4 +1,15 @@
 #!/bin/sh
+
+## Notes and TODO:
+#  First off the ligand detection is absolutly fucked.... how fix? parse with biopython or detect by chain_id
+#  What the fuck is the gpf file?
+#  I think the prep for protien should be done on download and the target pocket identification should be done later in the workflow
+#  	- ie somethin like this https://app.eraser.io/workspace/BGuRgEioWmzZCgtljtfp?origin=share
+#	- og workflow does it first, doing it the other way will allow us to do virtual screens and blind docks
+#  Tbh the RCSB database is only like 300TB.. might be worth putting it on a local raid mirror in the future
+#
+#
+
 set -e
 
 [ $# != 1 ] && echo "usage: $0 pdbid" && exit 1
