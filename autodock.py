@@ -1,3 +1,7 @@
+# This is the DAG (Directed acyclic graph) which is responsible for defining the workflow. Tbh it isnt all that bad but some things need to be changed...
+# First we shouldnt need pod operators for everything, takes longer to spin up the pod than it does to download the protein, or copy over the database from Jupyter.
+# this is also the OG one, i havent put the customized dag in here yet but ill change some minor detals such as the image.
+
 from airflow import DAG, XComArg
 from airflow.models.xcom_arg import MapXComArg
 from airflow.models.param import Param
@@ -11,13 +15,15 @@ from kubernetes.client import models as k8s
 
 
 # Specify the container image and Persistant volume class name
-IMAGE_NAME = 'gabinsc/autodock-gpu:1.5.3' # CHANGE ME
+IMAGE_NAME = 'hwcopeland/autodock-all:latest' # Custom image from the ./docker/Dockerfile
 PVC_NAME = 'pvc-autodock' # CHANGE ME
 
 # Define the volume to dump data ?? what is Volume_key
 MOUNT_PATH = '/data'
 VOLUME_KEY  = 'volume-autodock'
 
+
+## These params will be passed via api execution from Jupyter NB pods. Ive found 10000 ligand chunks works well
 params = {
     # PDBID of the receptor, which will be used to fetch protein data from PDB
     'pdbid': '7cpa',
@@ -27,7 +33,7 @@ params = {
     'ligand_db': 'sweetlead',
 
     # number of ligands per chunk
-    'ligands_chunk_size': 1000000,
+    'ligands_chunk_size': 10000,
 }
 
 ## What is this what is it calliing??
