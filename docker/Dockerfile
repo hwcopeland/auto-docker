@@ -37,6 +37,7 @@ RUN ulimit -n 65536
 RUN apt-get update && apt-get install -y \
     wget \
     openbabel \
+    nano \
     parallel \
     libnetcdf-dev \
     libboost-filesystem-dev \

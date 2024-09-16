@@ -6,7 +6,7 @@ import sys
 import subprocess
 import concurrent.futures
 import tempfile
-from Bio import Chem
+from rdkit import Chem
 
 def parse_args():
     """
@@ -17,12 +17,13 @@ def parse_args():
     parser.add_argument("batch_label", type=str, help="Batch label (e.g., TTT_A).")
     return parser.parse_args()
 
-def convert_sdf_to_pdbqt(mol, batch_label, index):
+def convert_sdf_to_pdbqt(mol, output_dir, batch_label, index):
     """
     Convert a single molecule from SDF to PDBQT using Open Babel.
     
     Parameters:
     - mol: RDKit molecule object.
+    - output_dir: Directory to save the converted PDBQT files.
     - batch_label: Label for the batch.
     - index: Unique index for naming.
     """
@@ -32,8 +33,8 @@ def convert_sdf_to_pdbqt(mol, batch_label, index):
             tmp_sdf.write(Chem.MolToMolBlock(mol))
             tmp_sdf_path = tmp_sdf.name
 
-        # Define output PDBQT filename
-        output_pdbqt = f"{batch_label}_{index}.pdbqt"
+        # Define output PDBQT filename in the batch-specific folder
+        output_pdbqt = os.path.join(output_dir, f"{batch_label}_{index}.pdbqt")
 
         # Run Open Babel to convert SDF to PDBQT
         command = [
@@ -70,6 +71,11 @@ def main():
         print(f"Error: SDF file '{sdf_filename}' not found.")
         sys.exit(1)
     
+    # Create output directory for the batch if it doesn't exist
+    output_dir = batch_label
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    
     # Read molecules from SDF using RDKit
     suppl = Chem.SDMolSupplier(sdf_filename, removeHs=False)
     molecules = [mol for mol in suppl if mol is not None]
@@ -84,7 +90,7 @@ def main():
     with concurrent.futures.ProcessPoolExecutor() as executor:
         futures = []
         for index, mol in enumerate(molecules, start=1):
-            futures.append(executor.submit(convert_sdf_to_pdbqt, mol, batch_label, index))
+            futures.append(executor.submit(convert_sdf_to_pdbqt, mol, output_dir, batch_label, index))
         
         # Optional: Wait for all futures to complete
         for future in concurrent.futures.as_completed(futures):
@@ -95,7 +101,7 @@ def main():
     with open(filelist, 'w') as fl:
         fl.write(f"{pdbid}.maps.fld\n")
         for index in range(1, len(molecules) + 1):
-            pdbqt_file = f"{batch_label}_{index}.pdbqt"
+            pdbqt_file = os.path.join(output_dir, f"{batch_label}_{index}.pdbqt")
             fl.write(f"{pdbqt_file}\n")
     
     print(f"Filelist '{filelist}' created successfully.")
