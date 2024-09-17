@@ -28,9 +28,16 @@ def convert_sdf_to_pdbqt(mol, output_dir, batch_label, index):
     - index: Unique index for naming.
     """
     try:
-        # Write molecule to a temporary SDF file
+        # Check if the molecule has at least one conformer
+        if mol.GetNumConformers() == 0:
+            # Generate a conformer if none exist
+            from rdkit.Chem import AllChem
+            AllChem.EmbedMolecule(mol)
+
+        # Write molecule to a temporary SDF file with only the first conformation
         with tempfile.NamedTemporaryFile(mode='w+', delete=False, suffix='.sdf') as tmp_sdf:
-            tmp_sdf.write(Chem.MolToMolBlock(mol))
+            mol_block = Chem.MolToMolBlock(mol, confId=0)
+            tmp_sdf.write(mol_block)
             tmp_sdf_path = tmp_sdf.name
 
         # Define output PDBQT filename in the batch-specific folder
@@ -49,6 +56,15 @@ def convert_sdf_to_pdbqt(mol, output_dir, batch_label, index):
         # Execute the command
         subprocess.run(command, check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         print(f"Successfully converted molecule {index} to {output_pdbqt}")
+
+        # Remove 'MODEL' and 'ENDMDL' lines from the output PDBQT file
+        with open(output_pdbqt, 'r') as f:
+            lines = f.readlines()
+
+        with open(output_pdbqt, 'w') as f:
+            for line in lines:
+                if not (line.startswith('MODEL') or line.startswith('ENDMDL')):
+                    f.write(line)
 
     except subprocess.CalledProcessError as e:
         print(f"Error converting molecule {index} to PDBQT:")
