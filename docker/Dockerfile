@@ -37,17 +37,19 @@ RUN apt-get update && apt-get install -y \
     libboost-program-options-dev \
     python3 \
     python3-pip \
-    libpython2.7
+    libpython2.7 \
+    git
 
 WORKDIR /autodock/
 # Copy binaries from builder stage
 COPY --from=builder /autodock/x86_64Linux2/autogrid4 ./autogrid4
 COPY --from=builder /usr/local/lib/libfpocket.so* /usr/local/lib/
+COPY --from=builder /autodock/x86_64Linux2/autodock4 ./autodock4
 RUN ldconfig
 
 # Install python2.7 pip2
 RUN wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
-
+RUN python3 -m pip install git+https://github.com/Valdes-Tresanco-MS/AutoDockTools_py3
 
 # Download and install MGLTools
 COPY mgltools_x86_64Linux2_1.5.7p1.tar.gz ./ 
