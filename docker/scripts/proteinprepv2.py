@@ -6,7 +6,6 @@ import argparse
 from Bio.PDB import PDBParser, PDBIO, Select
 
 # Define paths to MGLTools and AutoGrid executables
-MGLTOOLS = "/autodock/mgltools"
 AUTOGRID = "/autodock/autogrid4"  # Adjust if your AutoGrid executable path is different
 
 def run_command(command):
@@ -57,9 +56,8 @@ def prepare_receptor(pdb_file):
         print(f"Receptor PDBQT file already exists: {receptor_pdbqt}")
         return  # Skip preparation if file exists
 
-    prepare_script = f"{MGLTOOLS}/MGLToolsPckgs/AutoDockTools/Utilities24/prepare_receptor4.py"
     command = (
-        f"LD_LIBRARY_PATH={MGLTOOLS}/lib {MGLTOOLS}/bin/python2.7 {prepare_script} "
+        f"prepare_receptor4 "
         f"-r {pdb_file} -o {receptor_pdbqt} -U nphs_lps_waters_nonstdres"
     )
     run_command(command)
