@@ -53,3 +53,15 @@ component "cluster" {
 
 @enduml
 ```
+
+- Docker will run ansible and perform the running of the runbooks.
+- Kubernetes deploy playbook will:
+  - Install and update host OS and required packages
+  - Copy the templated files from the configs directory.
+  - Use Kubeadm/Kubectl to setup the pods.
+  - Startup pod services.
+
+- Autodock playbook will:
+  - Deploy the repo code changes to the given pod.
+
+- This can be extended to support runbooks which we can leverage to grab error logs/reports on the system and it's operations until a better form of metrics/logging can be arranged.
