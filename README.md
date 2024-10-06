@@ -1,3 +1,11 @@
+WIP based on the work of
+
+Daniel Medeiros, Gabin Schieffer, Jacob Wahlgren, Ivy Peng. 2023. _A GPU-accelerated Molecular Docking Workflow with Kubernetes and Apache Airflow_. WOCC'23
+
+Christopher Woods, University of Bristol, UK "Running Serverless HPC Workloads on Top of Kubernetes and Jupyter Notebooks" CNCF KubeCon18 
+
+
+
 # AutoDock-GPU workflow on Apache Airflow
 A workflow for molecular docking using AutoDock-GPU. The workflow is implemented as a DAG, and can be run in Apache Airflow, on a Kubernetes cluster.
 
