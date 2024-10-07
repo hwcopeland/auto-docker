@@ -19,9 +19,12 @@ We provide a DAG to execute molecular docking of a set of ligands to a fixed rec
 
 ### Folders
 The main DAG is contained in `autodock.py`, we also provide with the following folders:
-- `docker/` contains the `Dockerfile`, along with bash scripts which are included in the image;
-- `misc/` contains various configuration files, used for testing and development;
-- `plot/` contains python scripts to create plots.
+- `docker/` contains docker builds for images. each includes a `Dockerfile`, along with bash scripts which are included in the image;
+- `iac/` contains files related to *infrastructure as code*, this includes ansible files for a quick deployment
+- `rke2/` contains folders for each deployment with associated values and configurations 
+
+
+##All of this shit below is related to the last readme from Daniel
 
 ### Installation checklist (see _Setup & Installation_)
 - [ ] Kubernetes: PersistentVolume with name `pv-autodock`
