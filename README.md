@@ -6,14 +6,8 @@ Christopher Woods, University of Bristol, UK "Running Serverless HPC Workloads o
 
 
 
-# AutoDock-GPU workflow on Apache Airflow
-A workflow for molecular docking using AutoDock-GPU. The workflow is implemented as a DAG, and can be run in Apache Airflow, on a Kubernetes cluster.
-
-## Description
-
-We provide a DAG to execute molecular docking of a set of ligands to a fixed receptor, using AutoDock-GPU, with GPU acceleration on NVIDIA GPU.
-
-![AutoDock-GPU DAG in Apache Airflow UI](screenshot_workflow.jpg "Screenshot of the DAG in Apache Airflow")*The AutoDock-GPU DAG, as presented in the Apache Airflow UI*
+# AutoDock4 workflow on Apache Airflow
+A workflow for molecular docking using AutoDock4. The workflow is implemented as a DAG, and can be run in Apache Airflow, on a Kubernetes cluster.
 
 ## Quickstart
 
