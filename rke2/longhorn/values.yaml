@@ -1,0 +1,4 @@
+service:
+  ui:
+    type: LoadBalancer
+    externalTrafficPolicy: Cluster

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pvc-dags
+spec:
+  accessModes:
+    - ReadWriteMany  # Allows multiple pods to access the volume
+  resources:
+    requests:
+      storage: 10Gi  # Size of the volume
+  storageClassName: longhorn-ssd  # Specify your storage class

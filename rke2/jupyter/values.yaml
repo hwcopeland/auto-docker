@@ -1,0 +1,17 @@
+hub:
+  db:
+    type: postgres  # Use 'postgres' for PostgreSQL
+    pvc:
+      storageClassName: "longhorn-ssd"  # Your storage class (use Longhorn here)
+      accessModes:
+        - ReadWriteOnce
+singleuser:
+  storage:
+    dynamic:
+      pvcNameTemplate: claim-{username}{servername}
+      storageClass: "longhorn-ssd"  # Using Longhorn for dynamic user storage
+      storageAccessModes: ["ReadWriteMany"]
+    capacity: 20Gi  # Default capacity per user PVC
+  extraEnv:
+    PATH: "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+
