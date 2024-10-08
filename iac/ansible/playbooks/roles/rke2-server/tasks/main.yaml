@@ -1,0 +1,14 @@
+- name: Install RKE2
+  become: true
+  shell: |
+    curl -sfL https://get.rke2.io | sh -
+  register: rke2_install_result
+  changed_when: rke2_install_result.rc == 0
+
+- name: Enable and start rke2-server service
+  become: true
+  ansible.builtin.systemd:
+    name: rke2-server
+    enabled: yes
+    state: started
+
